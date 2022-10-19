@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VsCode</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            list-style: none;
+        }
+
+        body {
+            background-color: rgb(36, 36, 36);
+            overflow: hidden;
+        }
+
+        .nav {
+            z-index: 10;
+        }
+
+        .nav ul {
+            display: flex;
+            font-size: .9rem;
+            font-family: sans-serif;
+            background-color: rgb(68, 68, 68);
+            color: white;
+            padding: .1rem .3rem;
+            user-select: none;
+
+        }
+
+        .nav ul li {
+            cursor: pointer;
+            padding: 0 .4rem;
+
+        }
+
+        .nav ul li:hover {
+            background-color: rgb(94, 94, 94);
+            border-radius: .2rem;
+        }
+
+        .navitems {
+            position: relative;
+            z-index: 10;
+        }
+
+        .navitems .file-items {
+            display: none;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .edit-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 2.6rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .selection-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 5.1rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .view-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 10.1rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .go-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 13.1rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .run-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 15.1rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .terminal-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 17.6rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .navitems .help-items {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 22.2rem;
+            background-color: rgb(94, 94, 94);
+            color: white;
+            font-size: .8rem;
+            font-family: sans-serif;
+            padding: 1px 10px;
+        }
+
+        .sidebar-top {
+            display: flex;
+            flex-direction: column;
+            width: 3rem;
+            padding: 1rem 0;
+            gap: 1rem;
+            position: absolute;
+            top: 1.4rem;
+        }
+
+        .sidebar-top i {
+            color: white;
+            padding: .5rem 0;
+            font-size: 1.8rem;
+            margin: auto;
+        }
+
+        .sidebar-top i:hover {
+            color: rgb(153, 153, 153);
+            cursor: pointer;
+        }
+
+        .sidebar-bottom {
+            display: flex;
+            flex-direction: column;
+            width: 3rem;
+            padding: 1rem 0;
+            gap: 1rem;
+            position: absolute;
+            bottom: 1rem;
+        }
+
+        .sidebar-bottom i {
+            color: white;
+            padding: .5rem 0;
+            font-size: 1.8rem;
+            margin: auto;
+        }
+
+        .sidebar-bottom i:hover {
+            color: rgb(153, 153, 153);
+            cursor: pointer;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: -.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="nav">
+        <ul>
+            <li id="file">File</li>
+            <li id="edit">Edit</li>
+            <li id="selection">Selection</li>
+            <li id="view">View</li>
+            <li id="go">Go</li>
+            <li id="run">Run</li>
+            <li id="terminal">Terminal</li>
+            <li id="help">Help</li>
+        </ul>
+    </section>
+    <section class="navitems">
+        <ul class="file-items" id="fileitems">
+            <li>New Text File</li>
+            <li>New File...</li>
+            <li>New Window</li>
+            <hr>
+            <li>Open File</li>
+            <li>Open Folder...</li>
+            <li>Open Workspace from File...</li>
+            <li>Open Recent</li>
+            <hr>
+            <li>Add Folder to Workspace...</li>
+            <li>Save Workspace As...</li>
+            <li>Duplicate Workspace</li>
+            <hr>
+            <li>Save</li>
+            <li>Save As...</li>
+            <li>Save All</li>
+            <hr>
+            <li>Share</li>
+            <hr>
+            <li>Auto Save</li>
+            <li>Preferences</li>
+            <hr>
+            <li>Revert File</li>
+            <li>Close Editor</li>
+            <li>Close Folder</li>
+            <li>Close Window</li>
+            <hr>
+            <li>Exit</li>
+        </ul>
+        <ul class="edit-items" id="edititems">
+            <li>Undo</li>
+            <li>Redo</li>
+            <hr>
+            <li>Cut</li>
+            <li>Copy</li>
+            <li>Paste</li>
+            <hr>
+            <li>Find</li>
+            <li>Replace</li>
+            <hr>
+            <li>Find in Files</li>
+            <li>Replace in Files</li>
+            <hr>
+            <li>Toggle Line Comment</li>
+            <li>Toggle Block Comment</li>
+            <li>Emmet: Expand Abbreviation</li>
+        </ul>
+        <ul class="selection-items" id="selectionitems">
+            <li>Select All</li>
+            <li>Expand Selection</li>
+            <li>Shrink Selection</li>
+            <hr>
+            <li>Copy Line Up</li>
+            <li>Copy Line Down</li>
+            <li>Move Line Up</li>
+            <li>Move Line Down</li>
+            <li>Duplicate Selection</li>
+            <hr>
+            <li>Add Cursor Above</li>
+            <li>Add Cursor Below</li>
+            <li>Add Cursors to Line Ends</li>
+            <li>Add Next Occurence</li>
+            <li>Add Previous Occurence</li>
+            <li>Select All Occurence</li>
+            <hr>
+            <li>Switch to Click+Click for Multi-Cursor</li>
+            <li>Column Selection Mode</li>
+        </ul>
+        <ul class="view-items" id="viewitems">
+            <li>Command Palette...</li>
+            <li>Open View...</li>
+            <hr>
+            <li>Appearance</li>
+            <li>Editor Layout</li>
+            <hr>
+            <li>Explorer</li>
+            <li>Search</li>
+            <li>Source Control</li>
+            <li>Run</li>
+            <li>Extensions</li>
+            <hr>
+            <li>Problems</li>
+            <li>Output[Ctrl+K Ctrl+H]</li>
+            <li>Debug Console</li>
+            <li>Terminal</li>
+            <hr>
+            <li>Word Wrap</li>
+            <li>Minimap</li>
+            <li>Breadcrumbs</li>
+            <li>Render Whitespace</li>
+            <li>Render Control Characters</li>
+            <li>Sticky Scroll</li>
+        </ul>
+        <ul class="go-items" id="goitems">
+            <li>Back</li>
+            <li>Forward</li>
+            <li>Last Edit Location</li>
+            <hr>
+            <li>Switch Editor</li>
+            <li>Swicth Group</li>
+            <hr>
+            <li>Go to File...</li>
+            <li>Go to Symbol in Workspace...</li>
+            <hr>
+            <li>Go to Symbol in Editor...</li>
+            <li>Go to Definition</li>
+            <li>Go to Declaration</li>
+            <li>Go to Type Definition</li>
+            <li>Go to Implementations</li>
+            <li>Go to references</li>
+            <hr>
+            <li>Go to Line/Column...</li>
+            <li>Go to Bracket</li>
+            <hr>
+            <li>Next Problem</li>
+            <li>Previous Problem</li>
+            <hr>
+            <li>Next Change</li>
+            <li>Previous Change</li>
+        </ul>
+        <ul class="run-items" id="runitems">
+            <li>Start Debugging</li>
+            <li>Run Without Debugging</li>
+            <li>Stop Debugging</li>
+            <li>Restart Debugging</li>
+            <hr>
+            <li>Open Configurations</li>
+            <li>Add Configuration...</li>
+            <hr>
+            <li>Step Over</li>
+            <li>Step Into</li>
+            <li>Step Out</li>
+            <li>Continue</li>
+            <hr>
+            <li>Toggle Breakpoint</li>
+            <li>New Breakpoint</li>
+            <hr>
+            <li>Enable All Breakpoints</li>
+            <li>Disable All Breakpoints</li>
+            <li>Remove All Breakpoints</li>
+            <hr>
+            <li>Install Additional Debuggers</li>
+        </ul>
+        <ul class="terminal-items" id="terminalitems">
+            <li>New Terminal</li>
+            <li>Split Terminal</li>
+            <hr>
+            <li>Run Task...</li>
+            <li>Run Build Task...</li>
+            <li>Run Active File</li>
+            <li>Run Selected Text</li>
+            <hr>
+            <li>Show Running Tasks...</li>
+            <li>Restart Running Task...</li>
+            <li>Terminate Task...</li>
+            <hr>
+            <li>Configure Tasks...</li>
+            <li>Configure Default Build Task...</li>
+        </ul>
+        <ul class="help-items" id="helpitems">
+            <li>Get Started</li>
+            <li>Show All Commands</li>
+            <li>Documentation</li>
+            <li>Editor Playground</li>
+            <li>Release Notes</li>
+            <hr>
+            <li>Keyboard Shortcuts Reference [Ctrl+K Ctrl+R]</li>
+            <li>Video Tutorials</li>
+            <li>Tips and Tricks</li>
+            <hr>
+            <li>Join Us on Twitter</li>
+            <li>Search Feature Requests</li>
+            <li>Report Issue</li>
+            <hr>
+            <li>View License</li>
+            <li>Privacy Statement</li>
+            <hr>
+            <li>Toggle Developer Tools</li>
+            <li>Open Process Explorer</li>
+            <hr>
+            <li>Check For Updates...</li>
+            <li>About</li>
+        </ul>
+    </section>
+    <section class="sidebar">
+        <section class="sidebar-top">
+            <i class="fa fa-file"></i>
+            <i class="fa fa-search"></i>
+            <i class="fa fa-code-fork"></i>
+            <i class="fa fa-bug"></i>
+            <i class="fa fa-th-large"></i>
+        </section>
+        <section class="sidebar-bottom">
+            <i class="fa fa-user"></i>
+            <i class="fa fa-cog"></i>
+        </section>
+    </section>
+    <section class="footer">
+        <img src="bottom.png" alt="">
+    </section>
+
+
+
+
+    <script>
+        const fileitems = document.getElementById('fileitems')
+        const file = document.getElementById('file')
+        const edititems = document.getElementById('edititems')
+        const edit = document.getElementById('edit')
+        const selectionitems = document.getElementById('selectionitems')
+        const selection = document.getElementById('selection')
+        const viewitems = document.getElementById('viewitems')
+        const view = document.getElementById('view')
+        const goitems = document.getElementById('goitems')
+        const go = document.getElementById('go')
+        const runitems = document.getElementById('runitems')
+        const run = document.getElementById('run')
+        const terminalitems = document.getElementById('terminalitems')
+        const terminal = document.getElementById('terminal')
+        const helpitems = document.getElementById('helpitems')
+        const help = document.getElementById('help')
+        file.addEventListener('click', () => {
+            if (fileitems.style.display === "none") {
+                fileitems.style.display = "inline-block"
+            } else {
+                fileitems.style.display = "none"
+            }
+        })
+        edit.addEventListener('click', () => {
+            if (edititems.style.display === "none") {
+                edititems.style.display = "inline-block"
+            } else {
+                edititems.style.display = "none"
+            }
+        })
+        selection.addEventListener('click', () => {
+            if (selectionitems.style.display === "none") {
+                selectionitems.style.display = "inline-block"
+            } else {
+                selectionitems.style.display = "none"
+            }
+        })
+        view.addEventListener('click', () => {
+            if (viewitems.style.display === "none") {
+                viewitems.style.display = "inline-block"
+            } else {
+                viewitems.style.display = "none"
+            }
+        })
+        go.addEventListener('click', () => {
+            if (goitems.style.display === "none") {
+                goitems.style.display = "inline-block"
+            } else {
+                goitems.style.display = "none"
+            }
+        })
+        run.addEventListener('click', () => {
+            if (runitems.style.display === "none") {
+                runitems.style.display = "inline-block"
+            } else {
+                runitems.style.display = "none"
+            }
+        })
+        terminal.addEventListener('click', () => {
+            if (terminalitems.style.display === "none") {
+                terminalitems.style.display = "inline-block"
+            } else {
+                terminalitems.style.display = "none"
+            }
+        })
+        help.addEventListener('click', () => {
+            if (helpitems.style.display === "none") {
+                helpitems.style.display = "inline-block"
+            } else {
+                helpitems.style.display = "none"
+            }
+        })
+
+    </script>
+</body>
+
+</html>
